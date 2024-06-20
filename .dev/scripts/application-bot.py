@@ -37,7 +37,7 @@ def load_settings(file_path):
 
     debug = debug_flag == "1"
 
-    if debug_flag is not None and debug_flag != "0" and debug_flag != "1":
+    if debug_flag != "" and debug_flag != "0" and debug_flag != "1":
         print_warning(
             f"Debug flag {debug_flag} is not recognized. Check the README for more information."
         )

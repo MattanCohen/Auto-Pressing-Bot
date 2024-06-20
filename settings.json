@@ -1,8 +1,9 @@
 {
-    "window_name": "BlueStacks App Player",
+    "window_name": "YOUR_WINDOW",
     "keys": [
-        "[",
-        "]"
-    ],
-    "debug": "0"
+        "1",
+        "enter",
+        "space",
+        "F2"
+    ]
 }

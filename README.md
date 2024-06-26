@@ -19,6 +19,9 @@ Run the bat file at path "[Tools/print-all-open-windows.bat](Tools/print-all-ope
 ### Setting The Window Name
 After identifying the correct window, update the "window_name" in the [settings.json](settings.json) file to match.
 
+### Changing Press Delay Between Buttons
+Simply update the "press_delay_in_seconds" in the [settings.json](settings.json) file to the delay you want in seconds.
+
 ### Setting The Keys
 Insert any key you wish to be automatically pressed into the "keys" array within the [settings.json](settings.json) file. For a full list of supported keys, click [here](https://pywinauto.readthedocs.io/en/latest/code/pywinauto.keyboard.html) or refer to the file "key-list.txt" located in the .dev directory.
 

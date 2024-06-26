@@ -1,8 +1,10 @@
 {
-    "window_name": "BlueStacks App Player",
+    "window_name": "My Window From Window Identifier Bot",
+    "press_delay_in_seconds": "1",
+    "debug": "1",
     "keys": [
-        "[",
-        "]"
-    ],
-    "debug": "0"
+        "x",
+        "y",
+        "z"
+    ]
 }

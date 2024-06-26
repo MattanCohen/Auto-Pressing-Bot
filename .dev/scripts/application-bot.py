@@ -1,7 +1,7 @@
 from pywinauto import Application
 import json
 import os
-import threading
+import time
 
 # Global debug flag
 debug = None
@@ -19,38 +19,53 @@ def print_log(message):
 
 def load_settings(file_path):
     global debug
+
+    # Open file
     if not os.path.exists(file_path):
-        print_warning(f"Settings file does not exist at path {file_path}!")
+        print_warning(
+            f"Settings file does not exist at path {file_path}! Check the README file for more info."
+        )
         return None, None, None
 
     with open(file_path, "r") as file:
         data = json.load(file)
 
-    window_name = data.get("window_name", None)
-    print_log(f"Received window name: {window_name}")
-
-    keys = data.get("keys", None)
-    print_log(f"Received keys array: {keys}")
-
+    # Debug
     debug_flag = data.get("debug", "").lower()
-    print_log(f"Received debug flag {debug_flag}")
-
     debug = debug_flag == "1"
 
-    if debug_flag is not None and debug_flag != "0" and debug_flag != "1":
+    print_log(f"Debug mode ---> ACTIVATED!")
+    print_log(
+        f"Starting the bot with debug logs. To stop printing, read the README file"
+    )
+
+    # Window name
+    window_name = data.get("window_name", None)
+    if window_name is not None:
+        print_log(f"Received window name: {window_name}")
+    else:
         print_warning(
-            f"Debug flag {debug_flag} is not recognized. Check the README for more information."
+            f"window_name is not specified in the settings file! Check the README file for more info."
         )
 
-    return window_name, keys, debug
+    # Keys
+    keys = data.get("keys", None)
+    if keys is not None:
+        print_log(f"Received keys array: {keys}")
+    else:
+        print_warning(
+            f"keys array is empty in the settings file. check the README file for more info."
+        )
+
+    # Keys
+    press_delay_in_seconds = float(data.get("press_delay_in_seconds", 0.1))
+    print_log(f"Received this press delay in seconds: {press_delay_in_seconds}")
+
+    # Return
+    return window_name, keys, press_delay_in_seconds, debug
 
 
-window_name, keys, debug = load_settings("settings.json")
-
-print_log("The bot will start with these settings:")
-print_log(f"\twindow name: {window_name}")
-print_log(f"\tkeys to press: {keys}")
-print_log(f"\tdebug value: {debug}")
+window_name, keys, press_delay_in_seconds, debug = load_settings("settings.json")
 
 app, application = None, None
 
@@ -68,19 +83,23 @@ def press_keys_in_bluestacks_background(keys=[]):
         print_warning("Keys array is empty. Read the README file for more info.")
         return
 
-    print_log("Starting to press the keys on the window.")
     for key in keys:
         try:
-            application.send_keystrokes(key)
             print_log(f"Pressing the key {key} on the window {window_name}")
+            application.send_keystrokes(key)
+            print_log(f"Key pressed.")
         except Exception as e:
-            print_warning(f"Exception {e}")
+            print_warning(f"Exception! - {e}")
+
+        time.sleep(press_delay_in_seconds)
 
 
 if application is not None:
     print("------------------------------------------------")
     print("Starting the bot. To stop it, close the window.")
     print("------------------------------------------------")
+
+    print_log("Starting to press the keys on the window.")
 
     while True:
         press_keys_in_bluestacks_background(keys)

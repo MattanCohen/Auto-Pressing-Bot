@@ -28,5 +28,17 @@ Insert any key you wish to be automatically pressed into the "keys" array within
 ### Changing Debug
 To enable system logs, set the "debug" flag to 1 in the [settings.json](settings.json) file. Note that errors will always be printed, regardless of this setting.
 
-### How To Start The Bot With start-bot.bat File
+### Example
+```json
+{
+    "window_name": "YOUR_WINDOW",
+    "keys": [
+        "key1",
+        "key2"
+    ],
+    "debug": "0"
+}
+```
+
+# How To Start The Bot With start-bot.bat File
 To start the bot, run the "[start-bot.bat](start-bot.bat)" file. Enjoy automated key pressing! Press "q" to quit the bot at any time.
